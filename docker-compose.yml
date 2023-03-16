@@ -1,0 +1,32 @@
+version: '3.8'
+services:
+  backend:
+    container_name: pet_backend
+    volumes:
+      - ./:/pet_full_stack
+    build:
+      context: ""
+      dockerfile: Dockerfile
+    command:  bash -c "python /pet_full_stack/manage.py migrate  &&
+              python /pet_full_stack/manage.py  runserver 0.0.0.0:8000"
+    ports:
+      - '8000:8000'
+    env_file:
+      - .env.dev
+    depends_on:
+      - db
+
+
+  db:
+    restart: always
+    image: postgres:14
+    container_name: pet_db
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .env.dev
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres_data:

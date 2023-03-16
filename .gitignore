@@ -1,0 +1,6 @@
+venv
+requirements.txt
+.idea
+.gitignore
+.env.dev
+CoreRoot/settings.py
